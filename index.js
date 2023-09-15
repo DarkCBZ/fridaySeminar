@@ -3,5 +3,4 @@ const ctx = canvas.getContext("2d");
 
 ctx.fillRect(0, 0, 100, 100);
 
-alert(canvas.width);
-alert(canvas.style);
+alert(canvas.width, canvas.height);

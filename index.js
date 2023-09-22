@@ -9,11 +9,11 @@ function tick() {
     ctx.fillRect(0, 0, 500, 500);
 }
 
-document.onresize = () => {
+window.onresize = () => {
     alert("Resized");
     tick();
 }
-document.onload = () => {
+window.onload = () => {
     alert("Loaded");
     tick();
 }

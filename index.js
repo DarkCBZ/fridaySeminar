@@ -25,30 +25,32 @@ function render() {
 
   ctx.lineWidth = 1;
   ctx.fillStyle = player.color;
-  ctx.fillRect(player.x, player.y, player.width, player.height);
+  ctx.fillRect(canvas.width / 2 - player.width / 2, canvas.height / 2 - player.height / 2, player.width, player.height);
 
+  let playerRenderX = canvas.width / 2 - player.width / 2;
+  let playerRenderY = canvas.height / 2 - player.height / 2;
   //top
   ctx.beginPath();
-  ctx.moveTo(player.x, player.y);
-  ctx.lineTo(player.x + player.width, player.y);
+  ctx.moveTo(playerRenderX, playerRenderY);
+  ctx.lineTo(playerRenderX + player.width, playerRenderY);
   ctx.stroke();
 
   //bottom
   ctx.beginPath();
-  ctx.moveTo(player.x + player.width, player.y + player.height);
-  ctx.lineTo(player.x, player.y + player.height);
+  ctx.moveTo(playerRenderX + player.width, playerRenderY + player.height);
+  ctx.lineTo(playerRenderX, playerRenderY + player.height);
   ctx.stroke();
 
   //left
   ctx.beginPath();
-  ctx.moveTo(player.x, player.y + player.height);
-  ctx.lineTo(player.x, player.y);
+  ctx.moveTo(playerRenderX, playerRenderY + player.height);
+  ctx.lineTo(playerRenderX, playerRenderY);
   ctx.stroke();
 
   //right
   ctx.beginPath();
-  ctx.moveTo(player.x + player.width, player.y);
-  ctx.lineTo(player.x + player.width, player.y + player.height);
+  ctx.moveTo(playerRenderX + player.width, playerRenderY);
+  ctx.lineTo(playerRenderX + player.width, playerRenderY + player.height);
   ctx.stroke();
 }
 let player = {
@@ -57,11 +59,15 @@ let player = {
   width: 50,
   height: 50,
   color: "#303030",
-  speed: 10,
+  speed: 5,
   movingUp: false,
   movingDown: false,
   movingLeft: false,
   movingRight: false
+}
+let map = {
+  width: 5000,
+  height: 5000
 }
 function tick() {
   if (player.movingUp) player.y -= player.speed;
@@ -71,7 +77,7 @@ function tick() {
 
   render();
 }
-setInterval(tick, 1000 / 20);
+setInterval(tick, 1000 / 30);
 
 window.onkeydown = x => {
   switch (true) {

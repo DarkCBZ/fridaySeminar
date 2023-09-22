@@ -7,19 +7,19 @@ function render() {
 
   ctx.fillStyle = "#822222";
 
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, map.width, map.height);
 
   ctx.lineWidth = 1;
-  for (let i = 0; i < canvas.width; i += 30) {
+  for (let i = 0; i < map.width; i += 30) {
     ctx.beginPath();
     ctx.moveTo(i, 0);
-    ctx.lineTo(i, canvas.height);
+    ctx.lineTo(i, map.height);
     ctx.stroke();
   }
-  for (let i = 0; i < canvas.height; i += 30) {
+  for (let i = 0; i < map.height; i += 30) {
     ctx.beginPath();
     ctx.moveTo(0, i);
-    ctx.lineTo(canvas.width, i);
+    ctx.lineTo(map.width, i);
     ctx.stroke();
   }
 

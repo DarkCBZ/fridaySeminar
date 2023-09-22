@@ -6,8 +6,8 @@ try {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    alert(canvas.width);
-    alert(canvas.height);
+    //alert(canvas.width);
+    //alert(canvas.height);
 
     ctx.fillStyle = "#B22222";
 
@@ -29,11 +29,11 @@ try {
   }
 
   window.onresize = () => {
-    alert("Resized");
+    //alert("Resized");
     tick();
   };
   window.onload = () => {
-    alert("Loaded");
+    //alert("Loaded");
     tick();
   };
 } catch (error) {

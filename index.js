@@ -14,8 +14,8 @@ try {
     ctx.fillRect(
       0,
       0,
-      Math.round(canvas.width / 2),
-      Math.round(canvas.height / 2)
+      Math.ceil(canvas.width),
+      Math.ceil(canvas.height)
     );
   }
 

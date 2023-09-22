@@ -1,12 +1,13 @@
-try {
-  const canvas = document.getElementById("canvas");
-  const ctx = canvas.getContext("2d");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-  function tick() {
+function tick() {
+  try {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     //alert(canvas.width);
     //alert(canvas.height);
+
     //Background Start
     ctx.fillStyle = "#B22222";
 
@@ -25,16 +26,17 @@ try {
       ctx.lineTo(canvas.width, i);
       ctx.stroke();
     }
+  } catch (error) {
+    alert(error);
   }
-  //Background End
-  window.onresize = () => {
-    //alert("Resized");
-    tick();
-  };
-  window.onload = () => {
-    //alert("Loaded");
-    tick();
-  };
-} catch (error) {
-  alert(error);
 }
+//Background End
+
+window.onresize = () => {
+  //alert("Resized");
+  tick();
+};
+window.onload = () => {
+  //alert("Loaded");
+  tick();
+};

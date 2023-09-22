@@ -5,7 +5,7 @@ function render() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  ctx.fillStyle = "#B22222";
+  ctx.fillStyle = "#822222";
 
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -56,13 +56,55 @@ let player = {
   y: 20,
   width: 50,
   height: 50,
-  color: "#303030"
+  color: "#303030",
+  speed: 10,
+  movingUp: false,
+  movingDown: false,
+  movingLeft: false,
+  movingRight: false
 }
 function tick() {
+  if (player.movingUp) player.y -= player.speed;
+  if (player.movingDown) player.y += player.speed;
+  if (player.movingLeft) player.x -= player.speed;
+  if (player.movingRight) player.x += player.speed;
 
   render();
 }
+setInterval(tick, 1000 / 20);
 
+window.onkeydown = x => {
+  switch (true) {
+    case x.code === "KeyW":
+      player.movingUp = true;
+      break;
+    case x.code === "KeyA":
+      player.movingLeft = true;
+      break;
+    case x.code === "KeyS":
+      player.movingDown = true;
+      break;
+    case x.code === "KeyD":
+      player.movingRight = true;
+      break;
+  }
+}
+window.onkeyup = x => {
+  switch (true) {
+    case x.code === "KeyW":
+      player.movingUp = false;
+      break;
+    case x.code === "KeyA":
+      player.movingLeft = false;
+      break;
+    case x.code === "KeyS":
+      player.movingDown = false;
+      break;
+    case x.code === "KeyD":
+      player.movingRight = false;
+      break;
+  }
+}
 window.onresize = () => {
   render();
 };

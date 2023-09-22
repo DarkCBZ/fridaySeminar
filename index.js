@@ -9,7 +9,14 @@ try {
     alert(canvas.width);
     alert(canvas.height);
 
-    ctx.fillRect(0, 0, Math.round(canvas.width / 2), Math.round(canvas.height / 2));
+      ctx.fillStyle = "#505050";
+      
+    ctx.fillRect(
+      0,
+      0,
+      Math.round(canvas.width / 2),
+      Math.round(canvas.height / 2)
+    );
   }
 
   window.onresize = () => {

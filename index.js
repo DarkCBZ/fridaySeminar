@@ -14,7 +14,7 @@ try {
     ctx.fillRect(0, 0, Math.ceil(canvas.width), Math.ceil(canvas.height));
 
       ctx.lineWidth = 1;
-    for (let i = 0; i < canvas.width; i += 10) {
+    for (let i = 0; i < canvas.width; i += 30) {
         ctx.beginPath();
         ctx.moveTo(i, 0);
         ctx.lineTo(i, canvas.height);

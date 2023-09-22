@@ -5,10 +5,8 @@ try {
   function tick() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
     //alert(canvas.width);
     //alert(canvas.height);
-
     //Background Start
     ctx.fillStyle = "#B22222";
 
@@ -29,7 +27,6 @@ try {
     }
   }
   //Background End
-  e
   window.onresize = () => {
     //alert("Resized");
     tick();

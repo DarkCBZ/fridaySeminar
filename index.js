@@ -9,8 +9,8 @@ try {
     alert(canvas.width);
     alert(canvas.height);
 
-      ctx.fillStyle = "#505050";
-      
+    ctx.fillStyle = "#232425";
+
     ctx.fillRect(
       0,
       0,

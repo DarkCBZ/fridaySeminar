@@ -8,5 +8,11 @@ function tick() {
     ctx.fillRect(0, 0, 500, 500);
 }
 
-document.onresize = tick();
-document.onload = tick();
+document.onresize = () => {
+    alert("Resized");
+    tick();
+}
+document.onload = () => {
+    alert("Loaded");
+    tick();
+}

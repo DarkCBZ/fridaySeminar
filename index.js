@@ -6,7 +6,7 @@ try {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    ctx.fillRect(0, 0, window.width / 2, window.height / 2);
+    ctx.fillRect(0, 0, canvas.width / 2, canvas.height / 2);
   }
 
   window.onresize = () => {

@@ -6,7 +6,8 @@ try {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    alert(canvas.width, canvas.height);
+    alert(canvas.width);
+    alert(canvas.height);
 
     ctx.fillRect(0, 0, 200, 200);
   }

@@ -1,22 +1,22 @@
 try {
-    const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
 
-function tick() {
+  function tick() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    ctx.fillRect(0, 0, 500, 500);
-}
+    ctx.fillRect(0, 0, window.width / 2, window.height / 2);
+  }
 
-window.onresize = () => {
+  window.onresize = () => {
     alert("Resized");
     tick();
-}
-window.onload = () => {
+  };
+  window.onload = () => {
     alert("Loaded");
     tick();
-}
+  };
 } catch (error) {
-    alert(error);
+  alert(error);
 }

@@ -11,12 +11,15 @@ try {
 
     ctx.fillStyle = "#B22222";
 
-    ctx.fillRect(
-      0,
-      0,
-      Math.ceil(canvas.width),
-      Math.ceil(canvas.height)
-    );
+    ctx.fillRect(0, 0, Math.ceil(canvas.width), Math.ceil(canvas.height));
+
+      ctx.lineWidth = 1;
+    for (let i = 0; i < canvas.width; i += 10) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, canvas.height);
+        ctx.stroke();
+    }
   }
 
   window.onresize = () => {

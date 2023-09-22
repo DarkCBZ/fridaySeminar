@@ -9,6 +9,7 @@ try {
     //alert(canvas.width);
     //alert(canvas.height);
 
+    //Background Start
     ctx.fillStyle = "#B22222";
 
     ctx.fillRect(0, 0, Math.ceil(canvas.width), Math.ceil(canvas.height));
@@ -27,7 +28,8 @@ try {
       ctx.stroke();
     }
   }
-
+  //Background End
+  e
   window.onresize = () => {
     //alert("Resized");
     tick();

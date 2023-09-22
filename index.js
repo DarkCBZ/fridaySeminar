@@ -1,4 +1,5 @@
-const canvas = document.getElementById("canvas");
+try {
+    const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 function tick() {
@@ -15,4 +16,7 @@ document.onresize = () => {
 document.onload = () => {
     alert("Loaded");
     tick();
+}
+} catch (error) {
+    alert(error);
 }

@@ -1,15 +1,37 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+let map = {
+  width: 1000,
+  height: 1000,
+  squareWidth: 25,
+  squareHeight: 25
+}
+let player = {
+  width: 50,
+  height: 50,
+  color: "#303030",
+  speed: 5,
+  movingUp: false,
+  movingDown: false,
+  movingLeft: false,
+  movingRight: false
+}
+player.x = map.width / 2 - player.width / 2;
+player.y = map.height / 2 - player.height / 2;
+
+let playerRenderX;
+let playerRenderY;
+
 function render() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  let playerRenderX = canvas.width / 2 - player.width / 2;
-  let playerRenderY = canvas.height / 2 - player.height / 2;
+  playerRenderX = canvas.width / 2 - player.width / 2;
+  playerRenderY = canvas.height / 2 - player.height / 2;
 
+  //RENDER MAP
   ctx.fillStyle = "#822222";
-
   ctx.fillRect(playerRenderX - player.x, playerRenderY - player.y, map.width, map.height);
 
   ctx.lineWidth = 1;
@@ -26,55 +48,32 @@ function render() {
     ctx.stroke();
   }
 
+  //RENDER PLAYER
   ctx.lineWidth = 1;
   ctx.fillStyle = player.color;
   ctx.fillRect(playerRenderX, playerRenderY, player.width, player.height);
-
   //top
   ctx.beginPath();
   ctx.moveTo(playerRenderX, playerRenderY);
   ctx.lineTo(playerRenderX + player.width, playerRenderY);
   ctx.stroke();
-
   //bottom
   ctx.beginPath();
   ctx.moveTo(playerRenderX + player.width, playerRenderY + player.height);
   ctx.lineTo(playerRenderX, playerRenderY + player.height);
   ctx.stroke();
-
   //left
   ctx.beginPath();
   ctx.moveTo(playerRenderX, playerRenderY + player.height);
   ctx.lineTo(playerRenderX, playerRenderY);
   ctx.stroke();
-
   //right
   ctx.beginPath();
   ctx.moveTo(playerRenderX + player.width, playerRenderY);
   ctx.lineTo(playerRenderX + player.width, playerRenderY + player.height);
   ctx.stroke();
 }
-let player = {
-  width: 50
-}
-player = {
-  x: 0,
-  y: 0,
-  width: 50,
-  height: 50,
-  color: "#303030",
-  speed: 5,
-  movingUp: false,
-  movingDown: false,
-  movingLeft: false,
-  movingRight: false
-}
-let map = {
-  width: 1000,
-  height: 1000,
-  squareWidth: 25,
-  squareHeight: 25
-}
+
 function tick() {
   if (player.movingUp) player.y -= player.speed;
   if (player.movingDown) player.y += player.speed;

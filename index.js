@@ -1,16 +1,12 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
 function render() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
   let playerRenderX = canvas.width / 2 - player.width / 2;
   let playerRenderY = canvas.height / 2 - player.height / 2;
-
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
 
   ctx.fillStyle = "#822222";
 

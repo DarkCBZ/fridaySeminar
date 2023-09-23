@@ -1,5 +1,9 @@
+body, html {
+  overscroll-behavior: none;
+}
 body {
   background-color: #303030;
+  display: block;
 }
 #canvas {
   width: 100%;

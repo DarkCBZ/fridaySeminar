@@ -1,6 +1,9 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
 function render() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -54,8 +57,11 @@ function render() {
   ctx.stroke();
 }
 let player = {
-  x: -935,
-  y: -450,
+  width: 50
+}
+player = {
+  x: -canvas.width / 2 + player.width / 2,
+  y: -canvas.height / 2 + player.width / 2,
   width: 50,
   height: 50,
   color: "#303030",
@@ -66,8 +72,8 @@ let player = {
   movingRight: false
 }
 let map = {
-  width: 500,
-  height: 500
+  width: 1000,
+  height: 1000
 }
 function tick() {
   if (player.movingUp) player.y -= player.speed;

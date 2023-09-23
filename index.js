@@ -5,33 +5,35 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 function render() {
+
+  let playerRenderX = canvas.width / 2 - player.width / 2;
+  let playerRenderY = canvas.height / 2 - player.height / 2;
+
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
   ctx.fillStyle = "#822222";
 
-  ctx.fillRect(0 - player.x, 0 - player.y, map.width, map.height);
+  ctx.fillRect(playerRenderX - player.x, playerRenderY - player.y, map.width, map.height);
 
   ctx.lineWidth = 1;
-  for (let i = 0 - player.x; i < map.width - player.x; i += 30) {
+  for (let i = playerRenderX - player.x; i < map.width - player.x + playerRenderX; i += 30) {
     ctx.beginPath();
-    ctx.moveTo(i, 0 - player.y); //fix this line
-    ctx.lineTo(i, map.height - player.y);
+    ctx.moveTo(i, playerRenderY - player.y);
+    ctx.lineTo(i, map.height - player.y + playerRenderY);
     ctx.stroke();
   }
-  for (let i = 0 - player.y; i < map.height - player.y; i += 30) {
+  for (let i = playerRenderY - player.y; i < map.height - player.y + playerRenderY; i += 30) {
     ctx.beginPath();
-    ctx.moveTo(0 - player.x, i); //fix this one too
-    ctx.lineTo(map.width - player.x, i);
+    ctx.moveTo(playerRenderX - player.x, i);
+    ctx.lineTo(map.width - player.x + playerRenderX, i);
     ctx.stroke();
   }
 
   ctx.lineWidth = 1;
   ctx.fillStyle = player.color;
-  ctx.fillRect(canvas.width / 2 - player.width / 2, canvas.height / 2 - player.height / 2, player.width, player.height);
+  ctx.fillRect(canvas.width / 2 - player.width / 2, playerRenderY, player.width, player.height);
 
-  let playerRenderX = canvas.width / 2 - player.width / 2;
-  let playerRenderY = canvas.height / 2 - player.height / 2;
   //top
   ctx.beginPath();
   ctx.moveTo(playerRenderX, playerRenderY);
@@ -60,8 +62,8 @@ let player = {
   width: 50
 }
 player = {
-  x: -canvas.width / 2 + player.width / 2,
-  y: -canvas.height / 2 + player.width / 2,
+  x: 0,
+  y: 0,
   width: 50,
   height: 50,
   color: "#303030",

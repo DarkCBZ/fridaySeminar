@@ -13,13 +13,13 @@ function render() {
   ctx.fillRect(playerRenderX - player.x, playerRenderY - player.y, map.width, map.height);
 
   ctx.lineWidth = 1;
-  for (let i = playerRenderX - player.x; i < map.width - player.x + playerRenderX; i += 30) {
+  for (let i = playerRenderX - player.x; i < map.width - player.x + playerRenderX; i += map.squareWidth) {
     ctx.beginPath();
     ctx.moveTo(i, playerRenderY - player.y);
     ctx.lineTo(i, map.height - player.y + playerRenderY);
     ctx.stroke();
   }
-  for (let i = playerRenderY - player.y; i < map.height - player.y + playerRenderY; i += 30) {
+  for (let i = playerRenderY - player.y; i < map.height - player.y + playerRenderY; i += map.squareHeight) {
     ctx.beginPath();
     ctx.moveTo(playerRenderX - player.x, i);
     ctx.lineTo(map.width - player.x + playerRenderX, i);
@@ -28,7 +28,7 @@ function render() {
 
   ctx.lineWidth = 1;
   ctx.fillStyle = player.color;
-  ctx.fillRect(canvas.width / 2 - player.width / 2, playerRenderY, player.width, player.height);
+  ctx.fillRect(playerRenderX, playerRenderY, player.width, player.height);
 
   //top
   ctx.beginPath();
@@ -71,13 +71,20 @@ player = {
 }
 let map = {
   width: 1000,
-  height: 1000
+  height: 1000,
+  squareWidth: 25,
+  squareHeight: 25
 }
 function tick() {
   if (player.movingUp) player.y -= player.speed;
   if (player.movingDown) player.y += player.speed;
   if (player.movingLeft) player.x -= player.speed;
   if (player.movingRight) player.x += player.speed;
+
+  if (player.x >= map.width - player.width) player.x = map.width - player.width;
+  if (player.x <= 0) player.x = 0;
+  if (player.y >= map.height - player.height) player.y = map.height - player.height;
+  if (player.y <= 0) player.y = 0;
 
   render();
 }

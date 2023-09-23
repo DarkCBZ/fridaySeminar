@@ -7,19 +7,19 @@ function render() {
 
   ctx.fillStyle = "#822222";
 
-  ctx.fillRect(0, 0, map.width, map.height);
+  ctx.fillRect(0 - player.x, 0 - player.y, map.width, map.height);
 
   ctx.lineWidth = 1;
-  for (let i = 0; i < map.width; i += 30) {
+  for (let i = 0 - player.x; i < map.width - player.x; i += 30) {
     ctx.beginPath();
-    ctx.moveTo(i, 0);
-    ctx.lineTo(i, map.height);
+    ctx.moveTo(i, 0 - player.y); //fix this line
+    ctx.lineTo(i, map.height - player.y);
     ctx.stroke();
   }
-  for (let i = 0; i < map.height; i += 30) {
+  for (let i = 0 - player.y; i < map.height - player.y; i += 30) {
     ctx.beginPath();
-    ctx.moveTo(0, i);
-    ctx.lineTo(map.width, i);
+    ctx.moveTo(0 - player.x, i); //fix this one too
+    ctx.lineTo(map.width - player.x, i);
     ctx.stroke();
   }
 
@@ -54,8 +54,8 @@ function render() {
   ctx.stroke();
 }
 let player = {
-  x: 20,
-  y: 20,
+  x: -935,
+  y: -450,
   width: 50,
   height: 50,
   color: "#303030",
@@ -66,8 +66,8 @@ let player = {
   movingRight: false
 }
 let map = {
-  width: 5000,
-  height: 5000
+  width: 500,
+  height: 500
 }
 function tick() {
   if (player.movingUp) player.y -= player.speed;

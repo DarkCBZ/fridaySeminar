@@ -103,6 +103,9 @@ window.onkeydown = x => {
     case x.code === "KeyD":
       player.movingRight = true;
       break;
+    case x.code === "Space":
+
+      break;
   }
 }
 window.onkeyup = x => {
@@ -118,6 +121,9 @@ window.onkeyup = x => {
       break;
     case x.code === "KeyD":
       player.movingRight = false;
+      break;
+    case x.code === "Space":
+
       break;
   }
 }

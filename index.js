@@ -75,19 +75,37 @@ function render() {
 }
 
 function tick() {
+  // Speed
   if (player.movingUp) player.y -= player.speed;
   if (player.movingDown) player.y += player.speed;
   if (player.movingLeft) player.x -= player.speed;
   if (player.movingRight) player.x += player.speed;
 
-  if (player.x >= map.width - player.width) player.x = map.width - player.width;
-  if (player.x <= 0) player.x = 0;
-  if (player.y >= map.height - player.height) player.y = map.height - player.height;
-  if (player.y <= 0) player.y = 0;
+  // Diagonal speed
+  if (player.movingUp && player.movingRight) {
+    player.x -= player.speed - player.speed / Math.sqrt(2);
+    player.y += player.speed - player.speed / Math.sqrt(2);
+  }
+  if (player.movingUp && player.movingLeft) {
+    player.x += player.speed - player.speed / Math.sqrt(2);
+    player.y += player.speed - player.speed / Math.sqrt(2);
+  }
+  if (player.movingDown && player.movingRight) {
+    player.x -= player.speed - player.speed / Math.sqrt(2);
+    player.y -= player.speed - player.speed / Math.sqrt(2);
+  }
+  if (player.movingDown && player.movingLeft) {
+    player.x += player.speed - player.speed / Math.sqrt(2);
+    player.y -= player.speed - player.speed / Math.sqrt(2);
+  }
+
+  //clamp player to map
+  player.x = Math.max(0, Math.min(player.x, map.width - player.width));
+  player.y = Math.max(0, Math.min(player.y, map.height - player.height));
 
   render();
 }
-setInterval(tick, 1000 / 30);
+setInterval(tick, 1000 / 60);
 
 window.onkeydown = x => {
   switch (true) {

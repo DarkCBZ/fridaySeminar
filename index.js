@@ -2,12 +2,13 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 let map = {
-  width: 1000,
-  height: 1000,
+  width: 2000,
+  height: 2000,
   squareWidth: 25,
   squareHeight: 25
 }
 let player = {
+  coins: 0,
   width: 50,
   height: 50,
   color: "#303030",
@@ -23,6 +24,8 @@ player.y = map.height / 2 - player.height / 2;
 let playerRenderX;
 let playerRenderY;
 
+let coins = [];
+let coinWH = 25 / 2;
 function render() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -31,47 +34,88 @@ function render() {
   playerRenderY = canvas.height / 2 - player.height / 2;
 
   //RENDER MAP
-  ctx.fillStyle = "#822222";
-  ctx.fillRect(playerRenderX - player.x, playerRenderY - player.y, map.width, map.height);
+  function renderMap() {
+    ctx.fillStyle = "#822222";
+    ctx.fillRect(playerRenderX - player.x, playerRenderY - player.y, map.width, map.height);
 
-  ctx.lineWidth = 1;
-  for (let i = playerRenderX - player.x; i < map.width - player.x + playerRenderX; i += map.squareWidth) {
+    //lines
+    ctx.lineWidth = 1;
+    for (let i = playerRenderX - player.x; i < map.width - player.x + playerRenderX; i += map.squareWidth) {
+      ctx.beginPath();
+      ctx.moveTo(i, playerRenderY - player.y);
+      ctx.lineTo(i, map.height - player.y + playerRenderY);
+      ctx.stroke();
+    }
+    for (let i = playerRenderY - player.y; i < map.height - player.y + playerRenderY; i += map.squareHeight) {
+      ctx.beginPath();
+      ctx.moveTo(playerRenderX - player.x, i);
+      ctx.lineTo(map.width - player.x + playerRenderX, i);
+      ctx.stroke();
+    }
+  }
+
+  function renderCoin(x, y) {
+    coinX = playerRenderX - player.x + x;
+    coinY = playerRenderY - player.y + y;
+
+    ctx.fillStyle = "#DAA520";
+    ctx.fillRect(coinX, coinY, coinWH, coinWH);
+    //top
     ctx.beginPath();
-    ctx.moveTo(i, playerRenderY - player.y);
-    ctx.lineTo(i, map.height - player.y + playerRenderY);
+    ctx.moveTo(coinX, coinY);
+    ctx.lineTo(coinX + coinWH, coinY);
+    ctx.stroke();
+    //bottom
+    ctx.beginPath();
+    ctx.moveTo(coinX + coinWH, coinY + coinWH);
+    ctx.lineTo(coinX, coinY + coinWH);
+    ctx.stroke();
+    //left
+    ctx.beginPath();
+    ctx.moveTo(coinX, coinY + coinWH);
+    ctx.lineTo(coinX, coinY);
+    ctx.stroke();
+    //right
+    ctx.beginPath();
+    ctx.moveTo(coinX + coinWH, coinY);
+    ctx.lineTo(coinX + coinWH, coinY + coinWH);
     ctx.stroke();
   }
-  for (let i = playerRenderY - player.y; i < map.height - player.y + playerRenderY; i += map.squareHeight) {
+
+  function renderPlayer() {
+    //RENDER PLAYER
+    ctx.lineWidth = 1;
+    ctx.fillStyle = player.color;
+    ctx.fillRect(playerRenderX, playerRenderY, player.width, player.height);
+    //top
     ctx.beginPath();
-    ctx.moveTo(playerRenderX - player.x, i);
-    ctx.lineTo(map.width - player.x + playerRenderX, i);
+    ctx.moveTo(playerRenderX, playerRenderY);
+    ctx.lineTo(playerRenderX + player.width, playerRenderY);
+    ctx.stroke();
+    //bottom
+    ctx.beginPath();
+    ctx.moveTo(playerRenderX + player.width, playerRenderY + player.height);
+    ctx.lineTo(playerRenderX, playerRenderY + player.height);
+    ctx.stroke();
+    //left
+    ctx.beginPath();
+    ctx.moveTo(playerRenderX, playerRenderY + player.height);
+    ctx.lineTo(playerRenderX, playerRenderY);
+    ctx.stroke();
+    //right
+    ctx.beginPath();
+    ctx.moveTo(playerRenderX + player.width, playerRenderY);
+    ctx.lineTo(playerRenderX + player.width, playerRenderY + player.height);
     ctx.stroke();
   }
 
-  //RENDER PLAYER
-  ctx.lineWidth = 1;
-  ctx.fillStyle = player.color;
-  ctx.fillRect(playerRenderX, playerRenderY, player.width, player.height);
-  //top
-  ctx.beginPath();
-  ctx.moveTo(playerRenderX, playerRenderY);
-  ctx.lineTo(playerRenderX + player.width, playerRenderY);
-  ctx.stroke();
-  //bottom
-  ctx.beginPath();
-  ctx.moveTo(playerRenderX + player.width, playerRenderY + player.height);
-  ctx.lineTo(playerRenderX, playerRenderY + player.height);
-  ctx.stroke();
-  //left
-  ctx.beginPath();
-  ctx.moveTo(playerRenderX, playerRenderY + player.height);
-  ctx.lineTo(playerRenderX, playerRenderY);
-  ctx.stroke();
-  //right
-  ctx.beginPath();
-  ctx.moveTo(playerRenderX + player.width, playerRenderY);
-  ctx.lineTo(playerRenderX + player.width, playerRenderY + player.height);
-  ctx.stroke();
+  renderMap();
+
+  for (coin of coins) {
+    renderCoin(coin[0], coin[1]);
+  }
+
+  renderPlayer();
 }
 
 function tick() {
@@ -103,9 +147,34 @@ function tick() {
   player.x = Math.max(0, Math.min(player.x, map.width - player.width));
   player.y = Math.max(0, Math.min(player.y, map.height - player.height));
 
+  function createCoin() {
+    let x = Math.floor(Math.random() * map.width + 1);
+    let y = Math.floor(Math.random() * map.height + 1);
+
+    if (x > map.width - 25) x -= coinWH;
+    if (y > map.height - 25) y -= coinWH;
+    coins.push([x, y]);
+  }
+
+  while (coins.length < 1000) {
+    createCoin();
+  }
+
+  for (let i = 0; i < coins.length; i++) {
+    let coin = coins[i];
+    if (player.x < coin[0] + coinWH && player.x + player.width > coin[0]) {
+      if (player.y < coin[1] + coinWH && player.y + player.height > coin[1]) {
+
+        player.coins++;
+        coins[i] = coins[coins.length - 1];
+        coins.pop();
+      }
+    }
+  }
+
   render();
 }
-setInterval(tick, 1000 / 60);
+setInterval(tick, 1000 / 30);
 
 window.onkeydown = x => {
   switch (true) {

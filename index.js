@@ -12,7 +12,7 @@ let player = {
   width: 50,
   height: 50,
   color: "#303030",
-  speed: 5,
+  speed: 3,
   movingUp: false,
   movingDown: false,
   movingLeft: false,
@@ -168,13 +168,14 @@ function tick() {
         player.coins++;
         coins[i] = coins[coins.length - 1];
         coins.pop();
+        document.getElementsByClassName("cointext")[0].textContent = player.coins;
       }
     }
   }
 
   render();
 }
-setInterval(tick, 1000 / 30);
+setInterval(tick, 1000 / 120);
 
 window.onkeydown = x => {
   switch (true) {

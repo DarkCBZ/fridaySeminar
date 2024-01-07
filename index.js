@@ -3,11 +3,11 @@ function run() {
   const ctx = canvas.getContext("2d");
 
   let map = {
-    width: 4000,
-    height: 4000,
+    width: 6000,
+    height: 6000,
     squareWidth: 25,
     squareHeight: 25,
-    coins: 2000
+    coins: 3000
   }
   let player = {
     width: 50,
@@ -25,10 +25,10 @@ function run() {
     upgradeMapSize: 1
   }
 
-  let spdprice = Math.floor(10 * (1 + 0.75 * player.upgradeSpeed) * (1.15 ** player.upgradeSpeed));
-  let psizeupg = Math.floor(10 * (1 + 0.75 * player.upgradeSize) * (1.15 ** player.upgradeSize));
-  let mcoinupg = Math.floor(10 * (1 + 0.75 * player.upgradeMapCoins) * (1.15 ** player.upgradeMapCoins));
-  let msizeupg = Math.floor(10 * (1 + 0.75 * player.upgradeMapSize) * (1.15 ** player.upgradeMapSize));
+  let spdprice = Math.floor(9.5 * (1 + 0.75 * player.upgradeSpeed) * (1.25 ** player.upgradeSpeed));
+  let psizeupg = Math.floor(9.5 * (1 + 0.75 * player.upgradeSize) * (1.25 ** player.upgradeSize));
+  let mcoinupg = Math.floor(9.5 * (1 + 0.75 * player.upgradeMapCoins) * (1.25 ** player.upgradeMapCoins));
+  let msizeupg = Math.floor(9.5 * (1 + 0.75 * player.upgradeMapSize) * (1.25 ** player.upgradeMapSize));
 
   if (localStorage.coins === undefined) {
     player.coins = 0;
@@ -230,10 +230,10 @@ function run() {
     document.getElementsByClassName("mapsize")[0].textContent = `Map Size: ${map.width}`;
     document.getElementsByClassName("mapcoins")[0].textContent = `Map Coins: ${map.coins}`;
 
-    spdprice = Math.floor(10 * (1 + 0.75 * player.upgradeSpeed) * (1.15 ** player.upgradeSpeed));
-    psizeupg = Math.floor(10 * (1 + 0.75 * player.upgradeSize) * (1.15 ** player.upgradeSize));
-    mcoinupg = Math.floor(10 * (1 + 0.75 * player.upgradeMapCoins) * (1.15 ** player.upgradeMapCoins));
-    msizeupg = Math.floor(10 * (1 + 0.75 * player.upgradeMapSize) * (1.15 ** player.upgradeMapSize));
+    spdprice = Math.floor(9.5 * (1 + 0.75 * player.upgradeSpeed) * (1.25 ** player.upgradeSpeed));
+    psizeupg = Math.floor(9.5 * (1 + 0.75 * player.upgradeSize) * (1.25 ** player.upgradeSize));
+    mcoinupg = Math.floor(9.5 * (1 + 0.75 * player.upgradeMapCoins) * (1.25 ** player.upgradeMapCoins));
+    msizeupg = Math.floor(9.5 * (1 + 0.75 * player.upgradeMapSize) * (1.25 ** player.upgradeMapSize));
 
     document.getElementsByClassName("spdprice")[0].textContent = `Cost: ${spdprice}`;
     document.getElementsByClassName("psizeupg")[0].textContent = `Cost: ${psizeupg}`;
@@ -249,7 +249,7 @@ function run() {
         player.coins -= spdprice;
         player.speed += 0.5;
         player.upgradeSpeed++;
-        localStorage.upgradeSpeed = upgradeSpeed;
+        localStorage.upgradeSpeed = player.upgradeSpeed;
       }
     }
     if (x === 2) { //playersize
@@ -258,7 +258,7 @@ function run() {
         player.width += 5;
         player.height += 5;
         player.upgradeSize++;
-        localStorage.upgradeSize = upgradeSize;
+        localStorage.upgradeSize = player.upgradeSize;
       }
     }
     if (x === 3) { //mapcoins
@@ -266,7 +266,7 @@ function run() {
         player.coins -= mcoinupg;
         map.coins += 100;
         player.upgradeMapCoins++;
-        localStorage.upgradeMapCoins = upgradeMapCoins;
+        localStorage.upgradeMapCoins = player.upgradeMapCoins;
       }
     }
     if (x === 4) { //mapsize
@@ -276,7 +276,7 @@ function run() {
         map.height -= 100;
         coins = [];
         player.upgradeMapSize++;
-        localStorage.upgradeMapSize = upgradeMapSize;
+        localStorage.upgradeMapSize = player.upgradeMapSize;
       }
     }
     document.getElementsByClassName("cointext")[0].textContent = player.coins;

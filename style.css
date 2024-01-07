@@ -73,5 +73,23 @@ img {
 }
 .upg {
   font-family: "Calibri";
+  font-size: 16px;
   margin: 0 auto;
+}
+.left {
+  width: 200px;
+  height: 200px;
+  top: 50%; /* Center vertically */
+  left: 10px; /* Hug the left wall */
+  position: absolute; /* or position: fixed; */
+  transform: translateY(-50%); /* Adjust for vertical centering */
+  z-index: 2;
+}
+.lefttext {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  font-family: "Calibri";
+  font-size: 20px;
+  margin-left: 10px;
 }

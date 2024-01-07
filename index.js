@@ -6,7 +6,8 @@ function run() {
     width: 2000,
     height: 2000,
     squareWidth: 25,
-    squareHeight: 25
+    squareHeight: 25,
+    coins: 1000
   }
   let player = {
     coins: 0,
@@ -157,7 +158,7 @@ function run() {
       coins.push([x, y]);
     }
 
-    while (coins.length < 1000) {
+    while (coins.length < map.coins) {
       createCoin();
     }
 
@@ -173,6 +174,11 @@ function run() {
         }
       }
     }
+
+    document.getElementsByClassName("speed")[0].textContent = `Player Speed: ${player.speed}`;
+    document.getElementsByClassName("playersize")[0].textContent = `Player Size: ${player.width}`;
+    document.getElementsByClassName("mapsize")[0].textContent = `Map Size: ${map.width}`;
+    document.getElementsByClassName("mapcoins")[0].textContent = `Map Coins: ${map.coins}`;
 
     render();
   }

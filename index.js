@@ -1,4 +1,9 @@
 function run() {
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+    alert("this game doesnt work on phone silly goose");
+    for (; ;);
+  }
+
   const canvas = document.getElementById("canvas");
   const ctx = canvas.getContext("2d");
 
@@ -12,7 +17,7 @@ function run() {
   let player = {
     width: 50,
     height: 50,
-    color: "#303030",
+    color: "#EEEEEE",
     speed: 3,
     movingUp: false,
     movingDown: false,

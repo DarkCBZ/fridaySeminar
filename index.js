@@ -25,6 +25,11 @@ function run() {
     upgradeMapSize: 1
   }
 
+  let spdprice = Math.floor(10 * (1 + 0.75 * player.upgradeSpeed) * (1.15 ** player.upgradeSpeed));
+  let psizeupg = Math.floor(10 * (1 + 0.75 * player.upgradeSize) * (1.15 ** player.upgradeSize));
+  let mcoinupg = Math.floor(10 * (1 + 0.75 * player.upgradeMapCoins) * (1.15 ** player.upgradeMapCoins));
+  let msizeupg = Math.floor(10 * (1 + 0.75 * player.upgradeMapSize) * (1.15 ** player.upgradeMapSize));
+
   if (localStorage.coins === undefined) {
     player.coins = 0;
     localStorage.coins = 0;
@@ -57,6 +62,10 @@ function run() {
   }
 
   document.getElementsByClassName("cointext")[0].textContent = player.coins;
+  document.getElementsByClassName("spdprice")[0].textContent = `Cost: ${spdprice}`;
+  document.getElementsByClassName("psizeupg")[0].textContent = `Cost: ${psizeupg}`;
+  document.getElementsByClassName("mcoinupg")[0].textContent = `Cost: ${mcoinupg}`;
+  document.getElementsByClassName("msizeupg")[0].textContent = `Cost: ${msizeupg}`;
 
   player.x = map.width / 2 - player.width / 2;
   player.y = map.height / 2 - player.height / 2;
@@ -233,11 +242,6 @@ function run() {
     render();
   }
   setInterval(tick, 1000 / 120);
-
-  let spdprice;
-  let psizeupg;
-  let mcoinupg;
-  let msizeupg;
 
   function upgrade(x) {
     if (x === 1) { //speed

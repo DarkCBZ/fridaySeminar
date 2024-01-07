@@ -3,14 +3,13 @@ function run() {
   const ctx = canvas.getContext("2d");
 
   let map = {
-    width: 2000,
-    height: 2000,
+    width: 4000,
+    height: 4000,
     squareWidth: 25,
     squareHeight: 25,
-    coins: 1000
+    coins: 2000
   }
   let player = {
-    coins: 0,
     width: 50,
     height: 50,
     color: "#303030",
@@ -18,8 +17,47 @@ function run() {
     movingUp: false,
     movingDown: false,
     movingLeft: false,
-    movingRight: false
+    movingRight: false,
+    coins: 0,
+    upgradeSpeed: 1,
+    upgradeSize: 1,
+    upgradeMapCoins: 1,
+    upgradeMapSize: 1
   }
+
+  if (localStorage.coins === undefined) {
+    player.coins = 0;
+    localStorage.coins = 0;
+  } else {
+    player.coins = localStorage.coins;
+  }
+  if (localStorage.upgradeSpeed === undefined) {
+    player.upgradeSpeed = 1;
+    localStorage.upgradeSpeed = 1;
+  } else {
+    player.upgradeSpeed = localStorage.upgradeSpeed;
+  }
+  if (localStorage.upgradeSize === undefined) {
+    player.upgradeSize = 1;
+    localStorage.upgradeSize = 1;
+  } else {
+    player.upgradeSize = localStorage.upgradeSize;
+  }
+  if (localStorage.upgradeMapCoins === undefined) {
+    player.upgradeMapCoins = 1;
+    localStorage.upgradeMapCoins = 1;
+  } else {
+    player.upgradeMapCoins = localStorage.upgradeMapCoins;
+  }
+  if (localStorage.upgradeMapSize === undefined) {
+    player.upgradeMapSize = 1;
+    localStorage.upgradeMapSize = 1;
+  } else {
+    player.upgradeMapSize = localStorage.upgradeMapSize;
+  }
+
+  document.getElementsByClassName("cointext")[0].textContent = player.coins;
+
   player.x = map.width / 2 - player.width / 2;
   player.y = map.height / 2 - player.height / 2;
 
@@ -158,10 +196,12 @@ function run() {
       coins.push([x, y]);
     }
 
+    //makes coins
     while (coins.length < map.coins) {
       createCoin();
     }
 
+    //sees if player touches coin (not sexually)
     for (let i = 0; i < coins.length; i++) {
       let coin = coins[i];
       if (player.x < coin[0] + coinWH && player.x + player.width > coin[0]) {
@@ -170,6 +210,7 @@ function run() {
           player.coins++;
           coins[i] = coins[coins.length - 1];
           coins.pop();
+          localStorage.coins = player.coins;
           document.getElementsByClassName("cointext")[0].textContent = player.coins;
         }
       }
@@ -180,9 +221,67 @@ function run() {
     document.getElementsByClassName("mapsize")[0].textContent = `Map Size: ${map.width}`;
     document.getElementsByClassName("mapcoins")[0].textContent = `Map Coins: ${map.coins}`;
 
+    spdprice = Math.floor(10 * (1 + 0.75 * player.upgradeSpeed) * (1.15 ** player.upgradeSpeed));
+    psizeupg = Math.floor(10 * (1 + 0.75 * player.upgradeSize) * (1.15 ** player.upgradeSize));
+    mcoinupg = Math.floor(10 * (1 + 0.75 * player.upgradeMapCoins) * (1.15 ** player.upgradeMapCoins));
+    msizeupg = Math.floor(10 * (1 + 0.75 * player.upgradeMapSize) * (1.15 ** player.upgradeMapSize));
+
+    document.getElementsByClassName("spdprice")[0].textContent = `Cost: ${spdprice}`;
+    document.getElementsByClassName("psizeupg")[0].textContent = `Cost: ${psizeupg}`;
+    document.getElementsByClassName("mcoinupg")[0].textContent = `Cost: ${mcoinupg}`;
+    document.getElementsByClassName("msizeupg")[0].textContent = `Cost: ${msizeupg}`;
     render();
   }
   setInterval(tick, 1000 / 120);
+
+  let spdprice;
+  let psizeupg;
+  let mcoinupg;
+  let msizeupg;
+
+  function upgrade(x) {
+    if (x === 1) { //speed
+      if (player.coins >= spdprice) {
+        player.coins -= spdprice;
+        player.speed += 0.5;
+        player.upgradeSpeed++;
+        localStorage.upgradeSpeed = upgradeSpeed;
+      }
+    }
+    if (x === 2) { //playersize
+      if (player.coins >= psizeupg) {
+        player.coins -= psizeupg;
+        player.width += 5;
+        player.height += 5;
+        player.upgradeSize++;
+        localStorage.upgradeSize = upgradeSize;
+      }
+    }
+    if (x === 3) { //mapcoins
+      if (player.coins >= mcoinupg) {
+        player.coins -= mcoinupg;
+        map.coins += 100;
+        player.upgradeMapCoins++;
+        localStorage.upgradeMapCoins = upgradeMapCoins;
+      }
+    }
+    if (x === 4) { //mapsize
+      if (player.coins >= msizeupg) {
+        player.coins -= msizeupg;
+        map.width -= 100;
+        map.height -= 100;
+        coins = [];
+        player.upgradeMapSize++;
+        localStorage.upgradeMapSize = upgradeMapSize;
+      }
+    }
+    document.getElementsByClassName("cointext")[0].textContent = player.coins;
+  }
+
+  document.getElementsByClassName("divup1")[0].onclick = () => { upgrade(1); };
+  document.getElementsByClassName("divup2")[0].onclick = () => { upgrade(2); };
+  document.getElementsByClassName("divup3")[0].onclick = () => { upgrade(3); };
+  document.getElementsByClassName("divup4")[0].onclick = () => { upgrade(4); };
 
   window.onkeydown = x => {
     switch (true) {
@@ -203,6 +302,7 @@ function run() {
         break;
     }
   }
+
   window.onkeyup = x => {
     switch (true) {
       case x.code === "KeyW":
